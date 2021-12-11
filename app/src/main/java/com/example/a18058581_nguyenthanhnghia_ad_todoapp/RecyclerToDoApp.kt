@@ -94,7 +94,7 @@ class RecyclerToDoApp :AppCompatActivity() {
                     if (signIn.isSuccessful) {
 
                         toast("signed in successfully")
-                        finish()
+                        
                     } else {
                         toast("sign in failed")
                     }
