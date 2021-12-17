@@ -12,13 +12,15 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.internal.Util
 import kotlinx.android.synthetic.main.item_recylerview_work.view.*
 import kotlinx.android.synthetic.main.activity_recyclerview_todoapp.*
 
 
-class RecyclerviewAdapter(private val list:ArrayList<User>) : RecyclerView.Adapter<RecyclerviewAdapter.RecyclerViewHolder>() {
+class RecyclerviewAdapter( var list:ArrayList<User>) : RecyclerView.Adapter<RecyclerviewAdapter.RecyclerViewHolder>() {
 
 
+    var ItemClickListener: ((position:Int,checked:String,cardView:CardView)->Unit)?=null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
 
@@ -32,20 +34,18 @@ class RecyclerviewAdapter(private val list:ArrayList<User>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val currentItem = list[position]
         holder.txtWork.text = currentItem.work
-        val redText = SpannableString(currentItem.status)
+        val textColor = SpannableString(currentItem.status)
         if (currentItem.status.equals("Not Complete")){
-            redText.setSpan(ForegroundColorSpan(Color.RED),0,redText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            textColor.setSpan(ForegroundColorSpan(Color.RED),0,textColor.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
+        else
+            textColor.setSpan(ForegroundColorSpan(Color.GREEN),0,textColor.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 
 
-        //
-        holder.cardView.setOnClickListener {
+        ItemClickListener?.invoke(position,currentItem.checked.toString(),holder.cardView)
 
-            holder.cardView.isSelected=!holder.cardView.isSelected
-
-        }
-        holder.txtStatus.text = redText
+        holder.txtStatus.text = textColor
 
 
 
@@ -62,5 +62,9 @@ class RecyclerviewAdapter(private val list:ArrayList<User>) : RecyclerView.Adapt
         val cardView: CardView = itemView.cardView
 
 
+    }
+    fun updateList(newList: ArrayList<User>){
+        this.list = newList
+        notifyDataSetChanged()
     }
 }
