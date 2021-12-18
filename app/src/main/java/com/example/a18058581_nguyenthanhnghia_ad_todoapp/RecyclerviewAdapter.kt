@@ -35,12 +35,12 @@ class RecyclerviewAdapter( var list:ArrayList<User>) : RecyclerView.Adapter<Recy
         ItemClickListener?.invoke(position,currentItem.checked.toString(),holder.cardView)
 
         if (currentItem.checked=="1"){
-            val textColor = SpannableString("Complete")
+            val textColor = SpannableString("Completed")
             textColor.setSpan(ForegroundColorSpan(Color.GREEN),0,textColor.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             holder.txtStatus.text = textColor
         }
         else{
-            val textColor = SpannableString("Not Complete")
+            val textColor = SpannableString("Not Completed")
             textColor.setSpan(ForegroundColorSpan(Color.RED),0,textColor.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             holder.txtStatus.text = textColor
         }

@@ -79,23 +79,19 @@ class RecyclerToDoApp :AppCompatActivity() {
             if (dem>1){
                 toast("You chose many works!")
             }
-
             else{
                 if (dem==0){
                     toast("Chosse work to update")
-
                 }
                 else{
                     for (item in check.indices){
                         if (check[item]==1){
                             note=item
-
                         }
-
                     }
                     if (note!=-1)
                         showDialogUpdate(note)
-                    else toast("Xin hãy chọn một công viêc để thực udpate!")
+                    else toast("Chosse work to update!")
 
                 }
             }
@@ -230,7 +226,7 @@ class RecyclerToDoApp :AppCompatActivity() {
         }
     }
     fun loadData(){
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        databaseReference = FirebaseDatabase.getInstance().getReference("Works")
         val uid = FirebaseUtils.firebaseAuth.currentUser?.uid
 
         if (uid!=null){
